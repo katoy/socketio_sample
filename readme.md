@@ -1,15 +1,14 @@
-express �� socket.io ��Ĥ��äƸ�������ץ�Ǥ���
+express で socket.io をつかって見たサンプルです。
 
-;;;;
-npm install
-npm start
+    npm install
+    npm start
 
-ʣ���Υ֥饦���� http://localhost:3000 �򳫤���<br/>
-�ޥ�����ư�䡢�����ܡ���ͺ���򤷤ƤߤƤ���������<br/>
-�ե��������������äƤ��ʤ��֥饦���β�����Ǥ���³�ֿ��������Υ����ɡ��ޥ������֤�ɽ������������ޤ���<br/>
+複数のブラウザで http://localhost:3000 を開き、<br/>
+マウス移動や、キーボード雄下をしてみてください。<br/>
+フォーカスが当たっていないブラウザの画面中でも接続車数、キーのコード、マウス位置の表示が更新されます。<br/>
 
-https://github.com/sksmatt/nodejs-cursor-tracking
-�򻲹ͤˤ��ƺ������ޤ�����
+[https://github.com/sksmatt/nodejs-cursor-tracking](https://github.com/sksmatt/nodejs-cursor-tracking)
+を参考にして作成しました。
 
 ## License 
 

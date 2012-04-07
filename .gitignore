@@ -1,4 +1,4 @@
 .DS_Store
 node_modules/
-public/stylesheets/stylus.css
-
+public/stylesheets/style.css
+docs/

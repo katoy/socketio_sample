@@ -6,6 +6,21 @@
         $("#key").text("" + data.code);
     };
 
+    var ctx;
+
+    // Draw Function
+    function draw(x, y, type) {                
+        if (type === "dragstart") {                    
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        } else if (type === "drag") {                    
+            ctx.lineTo(x,y);
+            ctx.stroke();
+        } else {                    
+            ctx.closePath();
+        }
+    };
+    
     // Player
     var Player = function(id) {
         this.id = id;
@@ -18,10 +33,13 @@
             bind.call(this);
         }
         , bind = function(){
-            $(document).on( 'mousemove', {PlayerObj: this}, (function(event) {
-                var player = event.data.PlayerObj;
-                player.x = ((event.pageX / $(window).width()) * 100).toFixed(2);
-                player.y = ((event.pageY / $(window).height()) * 100).toFixed(2);
+            $("#canvas").on( 'mousemove', {PlayerObj: this}, (function(event) {
+                var player = event.data.PlayerObj;                
+                var page = $("#canvas");
+                // player.x = ((100 * event.pageX / page.width())).toFixed(4);
+                // player.y = ((100 * event.pageY / page.height())).toFixed(4);
+                player.x = event.pageX;
+                player.y = event.pageY;
                 socket.emit('move', { friend: player.id, friendX: player.x, friendY: player.y });                
             }));
             $(document).on( 'focus',  {PlayerObj: this}, (function(event) {
@@ -36,6 +54,24 @@
                 socket.emit('key', data);
                 show_key(data);
             }));
+            
+            $('#canvas').on('drag dragstart dragend', {PlayerObj: this}, (function(event) {
+                var offset, type, x, y;
+                type = event.handleObj.type;
+                if ((type === "drag") || ( type === "dragstart")) {
+                    offset = $(this).offset();
+                    x = event.pageX - offset.left; // event.layerX - offset.left;
+                    y = event.pageY - offset.top; // event.layerY - offset.top;
+                } else {
+                    x = 0;
+                    y = 0;
+                }                
+                var data =   {x: x, y: y, type: type};
+                socket.emit('drawClick', data);
+                // console.log("-------- canvas drag " + x + ", " + y + ", " + type);
+                draw(x, y, type);
+            }));
+            
         };
         return { init: init };
     }();
@@ -105,8 +141,8 @@
             create.call(this);
             return false;
         }
-        , update = function(x,y) {
-            this.element.css({'left':x+'%','top':y+'%', 'display': 'inline'});
+        , update = function(x, y) {
+            this.element.css({'left': x - 5,'top': y - 3, 'display': 'inline'});
         };
         return {
             init: init,
@@ -123,7 +159,7 @@
     };
     Meeting.prototype = function(){
         var init = function(){
-            bind.call(this);
+            bind.call(this);            
         }
         , bind = function(){
             var self = this;
@@ -135,6 +171,17 @@
                 });
                 self.player = new Player(data.player);
                 updateTotalConnections(data.friends.length);
+
+                var canvas = $("#canvas");
+                if (canvas[0].getContext) {
+                    ctx = canvas[0].getContext("2d");
+                    ctx.strokeStyle = 'rgba(77, 200, 80, 0.1)';
+                    ctx.lineWidth = 10;
+                    ctx.lineCap = "round";
+                    self.ctx = ctx;
+                } else {
+                    canvas.text("Can not use canvas.");
+                }
             });
             
             // New friend
@@ -159,6 +206,11 @@
                 show_key(data);
             });
 
+            // drawClick
+            socket.on('drawClick', function (data) {
+                draw(data.x, data.y, data.type);
+            });
+
         }
         , createFriend = function(id, player){
             if ( player && player == id ) {
@@ -177,7 +229,7 @@
         };
         return { init: init };
     }();
-
+    
     var app = new Meeting(socket);
     
 })(jQuery);

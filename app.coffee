@@ -47,6 +47,9 @@ io.sockets.on "connection", (socket) ->
   socket.on "move", (data) ->
     socket.broadcast.emit "move", data
 
+  socket.on 'drawClick', (data) ->
+    socket.broadcast.emit 'drawClick', data
+
   socket.on "key", (data) ->
     socket.broadcast.emit "key", data
 

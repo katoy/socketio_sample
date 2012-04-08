@@ -5,6 +5,9 @@ body
   font-family:'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', sans-serif
   background-color: #F3F3F3
 
+h1
+  margin: 0
+
 .friend
   width: 16px
   height: 16px
@@ -13,11 +16,19 @@ body
   z-index: 9000
   pointer-events: none
 
-#users
-	display: inline
-#connections
-	display: inline
-#press
-	display: inline
-#key
-	display: inline
+#info
+  position: absolute
+  z-index: 100
+  top: 0
+  left: 0
+#users, #connections, #press, #key
+  display: inline
+  margin-left: 10px
+
+#canvas
+  position: absolute
+  z-index: 200
+  border-width: 1px
+  border-style: solid
+  border-color: black
+

@@ -7,6 +7,8 @@ express で socket.io をつかって見たサンプルです。
 マウス移動や、キーボード雄下をしてみてください。<br/>
 フォーカスが当たっていないブラウザの画面中でも接続車数、キーのコード、マウス位置の表示が更新されます。<br/>
 
+マウスドラッグすると線を引くことができます。これも他のブラウザ画面に表示が反映されます。<br/>
+
 [https://github.com/sksmatt/nodejs-cursor-tracking](https://github.com/sksmatt/nodejs-cursor-tracking)
 を参考にして作成しました。
 

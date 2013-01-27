@@ -1,16 +1,17 @@
-express で socket.io をつかって見たサンプルです。
+express3 で socket.io をつかってみたサンプルです。
+(以前は express2 を使ってました。 express3 で動作するように変更しました。)  
 
     npm install
     npm start
 
-複数のブラウザで http://localhost:3000 を開き、<br/>
-マウス移動や、キーボード雄下をしてみてください。<br/>
-フォーカスが当たっていないブラウザの画面中でも接続車数、キーのコード、マウス位置の表示が更新されます。<br/>
+複数のブラウザで http://localhost:3000 を開き、
+マウス移動や、キーボード押下をしてみてください。
+フォーカスが当たっていないブラウザの画面中でも接続車数、キーのコード、マウス位置の表示が更新されます。
 
-マウスドラッグすると線を引くことができます。これも他のブラウザ画面に表示が反映されます。<br/>
+マウスドラッグすると線を引くことができます。これも他のブラウザ画面に表示が反映されます。  
 
 [https://github.com/sksmatt/nodejs-cursor-tracking](https://github.com/sksmatt/nodejs-cursor-tracking)
-を参考にして作成しました。
+を参考にして作成しました。(これは express2 を利用しています)
 
 ## License 
 

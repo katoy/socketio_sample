@@ -3,11 +3,17 @@
 
 express = require 'express'
 socketio = require 'socket.io'
+http = require 'http'
 _ = require 'underscore'
 routes = require './routes'
 
-app = module.exports = express.createServer()
+app = express()
 port = 3000
+
+server = http.createServer(app)
+io = socketio.listen(server)
+io.set 'log level', 1
+
 app.configure ->
   app.set "views", __dirname + "/views"
   app.set "view engine", "jade"
@@ -23,14 +29,14 @@ app.configure "development", () -> app.use express.errorHandler { dumpExceptions
 
 app.configure "production", () -> app.use express.errorHandler()
 
-app.listen port
-console.log "Server listening on port %d in %s mode", app.address().port, app.settings.env
+server.listen(port)
+console.log "Server listening on port #{port} in #{app.settings.env} mode"
+
 
 app.get "/", routes.index
 
 friends = []
 
-io = socketio.listen app
 io.sockets.on "connection", (socket) ->
   id = socket.id
   addUser id
@@ -58,4 +64,3 @@ addUser = (id) ->
 
 removeUser = (id) ->
   friends = _.reject(friends, (v) -> v == id)
-

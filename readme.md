@@ -15,6 +15,8 @@ express3 で socket.io をつかってみたサンプルです。
 
 ## License 
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/katoy/socketio_sample.svg)](https://greenkeeper.io/)
+
 (The MIT License)
 
 Copyright (c) 2012 Matt Varone &lt;contact@mattvarone.com&gt;
